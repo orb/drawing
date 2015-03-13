@@ -2,16 +2,17 @@
   (:require [quil.core :as q]
             [quil.middleware :as m]))
 
-(def flake (ref nil))        ;; reference to snowflake image
-(def background (ref nil))   ;; reference to blue background image
+(def flake      (atom nil))  ; reference to snowflake image
+(def background (atom nil))  ; reference to blue background image
 
 (defn setup []
   ;; loading two images
-  (dosync
-   (ref-set flake (q/load-image "images/white_flake.png"))
-   (ref-set background (q/load-image "images/blue_background.png")))
+  (reset! flake (q/load-image "images/white_flake.png"))
+  (reset! background (q/load-image "images/blue_background.png"))
+
   (q/smooth)
   (q/frame-rate 30)
+
   [{:x 100 :swing 10 :y 10 :speed 8}
    {:x 400 :swing 5 :y 300 :speed 11}
    {:x 700 :swing 8 :y 100 :speed 9}])
@@ -28,14 +29,13 @@
 
 (defn update-y
   [y speed]
-  (if (>= y (q/height)) ;; y is greater than or equal to image height?
-    0                   ;; true - get it back to the 0 (top)
-    (+ y speed)))       ;; false - add a value of speed
+  (if (>= y (q/height)) ; y is greater than or equal to image height?
+    0                   ; true - get it back to the 0 (top)
+    (+ y speed)))       ; false - add a value of speed
 
 (defn update [state]
   (for [p state]
-    (merge p {:x (update-x (:x p) (:swing p)) :y (update-y (:y p) (:speed p))})
-    ))
+    (merge p {:x (update-x (:x p) (:swing p)) :y (update-y (:y p) (:speed p))})))
 
 (defn draw [state]
   ;; drawing blue background and mutiple snowflakes on it

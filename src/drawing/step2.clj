@@ -2,16 +2,17 @@
   (:require [quil.core :as q]
             [quil.middleware :as m]))
 
-(def flake (ref nil))        ;; reference to snowflake image
-(def background (ref nil))   ;; reference to blue background image
+(def flake      (atom nil))   ; reference to snowflake image
+(def background (atom nil))   ; reference to blue background image
 
 (defn setup []
   ;; loading two images
-  (dosync
-   (ref-set flake (q/load-image "images/white_flake.png"))
-   (ref-set background (q/load-image "images/blue_background.png")))
+  (reset! flake      (q/load-image "images/white_flake.png"))
+  (reset! background (q/load-image "images/blue_background.png"))
+
   (q/smooth)
   (q/frame-rate 60)
+
   10)
 
 (defn update [state]

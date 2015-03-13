@@ -7,15 +7,15 @@ how to create a standalone application.
 In order to do that, you'll first create a *project*. You'll learn how
 to organize your project with *namespaces*. You'll also learn how to
 specify your project's *dependencies*. Finally, you'll learn how to
-*build* your project to create the standalone application.
+*build* your project to create a standalone application.
 
 ## Create a Project
 
 Up until now you've been experimenting in a REPL. Unfortunately, all
 the work you do in a REPL is lost when you close the REPL. You can
 think of a project as a permanent home for your code. You'll be using
-a tool called "Leiningen" to help you create and manage your
-project. To create a new project, run this command:
+a tool called [Leiningen](http://leiningen.org/) to help you create
+and manage your project. To create a new project, run this command:
 
 ```clojure
 lein new quil drawing
@@ -44,15 +44,13 @@ skeleton:
   should get executed first?"
 - `src/drawing/core.clj` is where the Clojure code goes
 
-This uses a Clojure library, Quil, that creates drawings called
-sketches.
+This uses a Clojure library, Quil, that creates drawings called sketches.
 
 Now let's go ahead and actually run the Quil sketch. Open up Light
 Table and do File - Open Folder - find the drawing folder and click
 Upload
 
-Press `Ctrl + Shift + Enter` (or `Cmd + Shift + Enter`) to evaluate
-the file.
+Press `Ctrl + Shift + Enter` (or `Cmd + Shift + Enter`) to evaluate the file.
 
 ## Modify Project
 
@@ -86,6 +84,7 @@ type the following:
 
 This line establishes that everything you define in this file will be
 stored within the `drawing.lines` namespace.
+
 
 ## Dependencies
 
@@ -133,23 +132,22 @@ We will define our own functions, like so...
 
 ```clojure
 (defn draw []
-   ; Do some things
+   ;; Do some things
    )
 ```
 
 ... that call functions that Quil provides, like so...
 
 ```clojure
-   ; Call the quil background function
+   ;; Call the quil background function
    (q/background 240)
 ```
 
 Put it together:
 ```clojure
 (defn draw []
-   ; Call the quil background function
-   (q/background 240)
-   )
+   ;; Call the quil background function
+   (q/background 240))
 ```
 
 In order to create a drawing (or sketch in Quil lingo) with Quil, you
@@ -164,11 +162,8 @@ closing parenthesis of the ns statement from before.
 
 ```clojure
 (defn setup []
-
   (q/frame-rate 30)
-
   (q/color-mode :rgb)
-
   (q/stroke 255 0 0))
 ```
 
@@ -191,13 +186,9 @@ closing parenthesis of the setup function.
 
 ```clojure
 (defn draw []
-
   (q/line 0 0 (q/mouse-x) (q/mouse-y))
-
   (q/line 200 0 (q/mouse-x) (q/mouse-y))
-
   (q/line 0 200 (q/mouse-x) (q/mouse-y))
-
   (q/line 200 200 (q/mouse-x) (q/mouse-y)))
 ```
 
@@ -213,13 +204,9 @@ drawn.
 
 ```clojure
 (q/defsketch hello-lines
-
   :title "You can see lines"
-
   :size [500 500]
-
   :setup setup
-
   :draw draw )
 ```
 
